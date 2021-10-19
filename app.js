@@ -31,6 +31,10 @@ app.get("/tnc", function(req, res){
   res.render("../public/html/tnc")
 })
 
+app.get("/support", function(req, res){
+  res.render("../public/html/support")
+})
+
 
 let port = process.env.PORT;
 if (port == null || port == "") {
