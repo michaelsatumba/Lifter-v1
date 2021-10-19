@@ -35,6 +35,10 @@ app.get("/support", function(req, res){
   res.render("../public/html/support")
 })
 
+app.get("/forgotPassword", function(req, res){
+  res.render("../public/html/forgotPassword")
+})
+
 
 let port = process.env.PORT;
 if (port == null || port == "") {
