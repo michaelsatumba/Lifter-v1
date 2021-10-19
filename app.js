@@ -27,6 +27,14 @@ app.get("/register", function(req, res){
   res.render("../public/html/register")
 })
 
+app.post("/register", function(req.res){
+  const newUser = new User ({
+    email: req.body.email,
+    password: req.body.password
+  });
+  newUser.save
+})
+
 app.get("/tnc", function(req, res){
   res.render("../public/html/tnc")
 })

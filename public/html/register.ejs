@@ -38,7 +38,7 @@
       <a class="navbar-brand" href="/">Lifter</a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        
+
       </button>
     </nav>
 
@@ -47,7 +47,7 @@
   <div class="col-lg-6 cl">
     <h1 class="big-heading">Create Account</h1>
     <!-- Validation -->
-    <form class="needs-validation" novalidate>
+    <form class="needs-validation" action="/register" method="POST">
       <div class="row">
         <div class="col-lg-6 ">
           <label for="validationCustom01">Name</label>
@@ -79,7 +79,7 @@
       <div class="row">
         <div class="col-lg-6">
           <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="email_id" placeholder="Enter Email address" required>
+          <input type="email" class="form-control" id="email_id" placeholder="Enter Email address" name="email" required>
           <div class="invalid-feedback">
             Please provide a valid email.
           </div>
@@ -87,7 +87,7 @@
         <div class="col-lg-6">
           <label for="exampleInputEmail1">Password</label>
           <input type="password" minlength="6" maxlength="12" class="form-control" id="password"
-            placeholder="Enter Password" required>
+            placeholder="Enter Password" name="password" required>
           <div class="invalid-feedback">
             Please provide a password with length (6-12).
           </div>
@@ -274,7 +274,7 @@
         </div>
       </div>
   </div>
-  <a href="../html/myProfile.html">
+  <a href="/myProfile">
     <button class="btn btn-outline-light continueB" type="submit">Register</button>
   </a>
   </form>
