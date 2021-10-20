@@ -94,21 +94,22 @@
                 <div class="modal-body">
 
                   <!-- Form Validation -->
-                  <form class="needs-validation" novalidate>
+                  <form action="/" method="POST">
                     <div class="form-group">
                       <label for="exampleInputUsername">Email Address:</label>
-                      <input class="form-control" id="validationCustom01" placeholder="Enter email address">
+                      <input class="form-control" id="validationCustom01" placeholder="Enter email address" name="email">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputPassword1">Password</label>
-                      <input type="password" class="form-control" id="validationCustom02" placeholder="Password">
+                      <input type="password" class="form-control" id="validationCustom02" placeholder="Password" name="password">
                     </div>
-                  </form>
+
 
                 </div>
                 <div class="modal-footer">
-                  <button type="button" id="userlogin"
+                  <button type="submit" id="userlogin"
                     class="loginC btn btn-outline-dark download-button">Continue</button>
+                  </form>
                 </div>
                 <div class="forgot">
                   <a class="forgotL" href="/forgotPassword">Forgot your password?</a>
@@ -291,21 +292,22 @@
 
 
               <!-- Form Validation -->
-              <form class="needs-validation" novalidate>
+              <form action="/" method="POST">
                 <div class="form-group">
-                  <label for="exampleInputUsername">Username</label>
-                  <input class="form-control" placeholder="Enter username">
+                  <label for="exampleInputUsername">Email Address:</label>
+                  <input class="form-control" id="validationCustom01" placeholder="Enter email address" name="email">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  <input type="password" class="form-control" id="validationCustom02" placeholder="Password" name="password">
                 </div>
-              </form>
+
 
             </div>
             <div class="modal-footer">
-              <button onclick="myFunction()" type="button" class="loginC btn btn-outline-dark download-button">Continue</button>
-            </div>
+              <button type="submit" id="userlogin"
+                class="loginC btn btn-outline-dark download-button">Continue</button>
+              </form>
             <div class="forgot">
               <a class="forgotL" href="https://cs.sfsu.edu/">Forgot your password?</a>
             </div>

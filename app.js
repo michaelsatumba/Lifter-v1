@@ -42,6 +42,23 @@ app.post("/register", function(req, res){
   })
 })
 
+app.post("/", function(req, res){
+  const email = req.body.email;
+  const password = req.body.password;
+
+  Lifter.findOne({email: email}, function(err, foundLifter){
+    if (err) {
+      console.log(err);
+    } else {
+      if (foundLifter) {
+        if (foundLifter.password === password) {
+          res.render("../public/html/myProfile")
+        }
+      }
+    }
+  })
+});
+
 app.get("/myProfile", function(req, res){
   res.render("../public/html/myProfile")
 })
