@@ -10,14 +10,14 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 
 
-mongoose.connect("mongodb://localhost:27017/userDB", {useNewUrlParser: true});
+mongoose.connect("mongodb://localhost:27017/LifterDB", {useNewUrlParser: true});
 
-const userSchema = {
+const LifterSchema = {
   email: String,
   password: String
 };
 
-const User = new mongoose.model("User", userSchema);
+const Lifter = new mongoose.model("Lifter", LifterSchema);
 
 app.get("/", function(req, res){
   res.render("../public/html/index")
@@ -28,18 +28,26 @@ app.get("/register", function(req, res){
 })
 
 app.post("/register", function(req, res){
-  const newUser = new User ({
+  const newLifter = new Lifter ({
     email: req.body.email,
     password: req.body.password
   });
 
-  newUser.save(function(err){
+  newLifter.save(function(err){
     if(err) {
       console.log(err);
     } else {
       res.render("../public/html/myProfile")
     }
   })
+})
+
+app.get("/myProfile", function(req, res){
+  res.render("../public/html/myProfile")
+})
+
+app.get("/matching", function(req, res){
+  res.render("../public/html/matching")
 })
 
 app.get("/tnc", function(req, res){

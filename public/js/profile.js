@@ -198,27 +198,6 @@ $("#editProfile").on("click", function () {
   });
 });
 
-$("#delaccount").on("click", function () {
-  $.ajax({
-    url: url + "deleteUser",
-    type: "POST",
-    crossDomain: true,
-    data: {
-      reg_id: sessionInfo.reg_id
-    },
-    success: function (response) {
-      if (response.status === "success") {
-        $("#modaldel").modal("hide");
-      }
-      alert("Account deleted");
-      window.location.href = "../index.html";
-    },
-    error: function () {
-      alert("failed");
-    },
-  });
-});
-
 $("#modal11-button").on("click", function () {
   $.ajax({
     url: url + "getWorkoutRequest",
