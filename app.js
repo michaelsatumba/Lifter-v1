@@ -32,7 +32,14 @@ app.post("/register", function(req, res){
     email: req.body.email,
     password: req.body.password
   });
-  newUser.save
+
+  newUser.save(function(err){
+    if(err) {
+      console.log(err);
+    } else {
+      res.render("../public/html/myProfile")
+    }
+  })
 })
 
 app.get("/tnc", function(req, res){
