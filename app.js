@@ -62,6 +62,10 @@ app.get("/forgotPassword", function(req, res){
   res.render("../public/html/forgotPassword")
 })
 
+app.get("/underConstruction", function(req, res){
+  res.render("../public/html/underConstruction")
+})
+
 
 let port = process.env.PORT;
 if (port == null || port == "") {
