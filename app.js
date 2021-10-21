@@ -3,19 +3,24 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var ejs = require("ejs");
-var md5 = require("md5");
+var bcrypt = require("bcrypt");
+var saltRounds = 1;
 
 
 var app = express();
 
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 
-mongoose.connect("mongodb://localhost:27017/LifterDB", {useNewUrlParser: true});
+mongoose.connect("mongodb://localhost:27017/LifterDB", {
+  useNewUrlParser: true
+});
 
-const LifterSchema = new mongoose.Schema ({
+const LifterSchema = new mongoose.Schema({
   email: String,
   password: String
 });
@@ -26,67 +31,79 @@ const LifterSchema = new mongoose.Schema ({
 
 const Lifter = new mongoose.model("Lifter", LifterSchema);
 
-app.get("/", function(req, res){
+app.get("/", function(req, res) {
   res.render("../public/html/index")
 })
 
-app.get("/register", function(req, res){
+app.get("/register", function(req, res) {
   res.render("../public/html/register")
 })
 
-app.post("/register", function(req, res){
-  const newLifter = new Lifter ({
-    email: req.body.email,
-    password: md5(req.body.password)
+app.post("/register", function(req, res) {
+
+  bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+    const newLifter = new Lifter({
+      email: req.body.email,
+      password: hash
+    });
+    newLifter.save(function(err) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render("../public/html/myProfile")
+      }
+    });
   });
 
-  newLifter.save(function(err){
-    if(err) {
-      console.log(err);
-    } else {
-      res.render("../public/html/myProfile")
-    }
-  })
+
 })
 
-app.post("/", function(req, res){
+app.post("/", function(req, res) {
   const email = req.body.email;
-  const password = md5(req.body.password);
+  const password = req.body.password;
 
-  Lifter.findOne({email: email}, function(err, foundLifter){
+  Lifter.findOne({
+    email: email
+  }, function(err, foundLifter) {
     if (err) {
       console.log(err);
     } else {
       if (foundLifter) {
-        if (foundLifter.password === password) {
-          res.render("../public/html/myProfile")
-        }
+        bcrypt.compare(password, foundLifter.password, function(err, result) {
+          if (result === true) {
+            res.render("../public/html/myProfile")
+          } else {
+            res.send("Invalid password!");
+          }
+        })
+      } else {
+        res.send("User not found!");
       }
     }
   })
 });
 
-app.get("/myProfile", function(req, res){
+app.get("/myProfile", function(req, res) {
   res.render("../public/html/myProfile")
 })
 
-app.get("/matching", function(req, res){
+app.get("/matching", function(req, res) {
   res.render("../public/html/matching")
 })
 
-app.get("/tnc", function(req, res){
+app.get("/tnc", function(req, res) {
   res.render("../public/html/tnc")
 })
 
-app.get("/support", function(req, res){
+app.get("/support", function(req, res) {
   res.render("../public/html/support")
 })
 
-app.get("/forgotPassword", function(req, res){
+app.get("/forgotPassword", function(req, res) {
   res.render("../public/html/forgotPassword")
 })
 
-app.get("/underConstruction", function(req, res){
+app.get("/underConstruction", function(req, res) {
   res.render("../public/html/underConstruction")
 })
 
