@@ -3,7 +3,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var ejs = require("ejs");
-var encrypt = require("mongoose-encryption");
+var md5 = require("md5");
 
 
 var app = express();
@@ -21,7 +21,7 @@ const LifterSchema = new mongoose.Schema ({
 });
 
 
-LifterSchema.plugin(encrypt, { secret: process.env.SECRET, encryptedFields: ["password"]});
+
 
 
 const Lifter = new mongoose.model("Lifter", LifterSchema);
@@ -37,7 +37,7 @@ app.get("/register", function(req, res){
 app.post("/register", function(req, res){
   const newLifter = new Lifter ({
     email: req.body.email,
-    password: req.body.password
+    password: md5(req.body.password)
   });
 
   newLifter.save(function(err){
@@ -51,7 +51,7 @@ app.post("/register", function(req, res){
 
 app.post("/", function(req, res){
   const email = req.body.email;
-  const password = req.body.password;
+  const password = md5(req.body.password);
 
   Lifter.findOne({email: email}, function(err, foundLifter){
     if (err) {
