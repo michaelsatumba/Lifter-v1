@@ -58,7 +58,7 @@ app.post("/register", function(req, res) {
 
 })
 
-app.post("/", function(req, res) {
+app.post("/", function(req, res, window) {
   const email = req.body.email;
   const password = req.body.password;
 
@@ -73,11 +73,11 @@ app.post("/", function(req, res) {
           if (result === true) {
             res.render("../public/html/myProfile")
           } else {
-            res.send("Invalid password!");
+            res.send("Incorrect Password")
           }
         })
       } else {
-        res.send("User not found!");
+        res.send("User not found");
       }
     }
   })
