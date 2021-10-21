@@ -1,7 +1,10 @@
+require("dotenv").config();
 var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var ejs = require("ejs");
+var encrypt = require("mongoose-encryption");
+
 
 var app = express();
 
@@ -12,10 +15,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 mongoose.connect("mongodb://localhost:27017/LifterDB", {useNewUrlParser: true});
 
-const LifterSchema = {
+const LifterSchema = new mongoose.Schema ({
   email: String,
   password: String
-};
+});
+
+
+LifterSchema.plugin(encrypt, { secret: process.env.SECRET, encryptedFields: ["password"]});
+
 
 const Lifter = new mongoose.model("Lifter", LifterSchema);
 
