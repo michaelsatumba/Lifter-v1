@@ -9,7 +9,7 @@ var passportLocalMongoose = require("passport-local-mongoose");
 
 var app = express();
 
-app.use(express.static("public"));
+app.use(express.static(__dirname));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
   extended: true
@@ -44,16 +44,16 @@ passport.serializeUser(Lifter.serializeUser());
 passport.deserializeUser(Lifter.deserializeUser());
 
 app.get("/", function(req, res) {
-  res.render("../public/html/index")
+  res.render("index")
 });
 
 app.get("/register", function(req, res) {
-  res.render("../public/html/register")
+  res.render("register")
 });
 
 app.get("/myProfile", function(req, res) {
-  if (req.isAuthenticated()){
-    res.render("../public/html/myProfile");
+  if (req.isAuthenticated()) {
+    res.render("/myProfile");
   } else {
     res.redirect("/");
   }
@@ -61,39 +61,23 @@ app.get("/myProfile", function(req, res) {
 
 app.post("/register", function(req, res) {
 
-  Lifter.register({username: req.body.email}, req.body.password, function(err, user){
+  Lifter.register({
+    username: req.body.email
+  }, req.body.password, function(err, user) {
     if (err) {
       console.log(err);
       res.redirect("/register");
     } else {
-      passport.authenticate("local")(req, res, function(){
-        res.render("../public/html/index")
-      })
+        res.redirect("/")
+
     }
   })
 
 });
 
-app.post("/", function(req, res, window) {
+app.post('/', (req, res) => passport.authenticate('local', { successRedirect: '/register', failureRedirect: '/', })(req, res));
 
-  const lifter = new Lifter({
-    username: req.body.email,
-    password: req.body.password
-  });
-
-  req.login(lifter, function(err){
-    if (err) {
-      console.log(err);
-    } else {
-      passport.authenticate("local")(req, res, function(){
-        res.render("../public/html/index")
-      });
-    }
-  })
-
-});
-
-app.get("/logout", function(req, res){
+app.get("/logout", function(req, res) {
   req.logout();
   res.redirect("/");
 });
@@ -103,23 +87,23 @@ app.get("/logout", function(req, res){
 
 
 app.get("/matching", function(req, res) {
-  res.render("../public/html/matching")
+  res.render("matching")
 });
 
 app.get("/tnc", function(req, res) {
-  res.render("../public/html/tnc")
+  res.render("tnc")
 });
 
 app.get("/support", function(req, res) {
-  res.render("../public/html/support")
+  res.render("support")
 });
 
 app.get("/forgotPassword", function(req, res) {
-  res.render("../public/html/forgotPassword")
+  res.render("forgotPassword")
 });
 
 app.get("/underConstruction", function(req, res) {
-  res.render("../public/html/underConstruction")
+  res.render("underConstruction")
 });
 
 
